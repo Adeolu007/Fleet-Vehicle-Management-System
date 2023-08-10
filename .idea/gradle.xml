@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Driver-Management-Service-Gradle" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/Driver-Management-Service-Gradle" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Fuel-Management-Service" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/Fuel-Management-Service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Maintenance-and-Repair-Service" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/Maintenance-and-Repair-Service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Reservation-Service" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/Reservation-Service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Vehicle-Management-Service-Gradle" />
+        <option name="gradleJvm" value="20" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/Vehicle-Management-Service-Gradle" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
