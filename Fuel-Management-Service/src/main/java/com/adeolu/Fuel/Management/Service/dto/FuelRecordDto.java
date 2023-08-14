@@ -13,5 +13,5 @@ public class FuelRecordDto {
     private LocalDate refuelingDate;
     private double litersFilled;
     private double costPerLiter;
-    private double totalCost;
+//    private double totalCost;
 }

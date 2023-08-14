@@ -23,7 +23,7 @@ public class VehicleServiceImpl implements VehicleService {
     private VehicleRepository vehicleRepository;
 
     @Autowired
-    private WebClient webClient;
+    private WebClient.Builder webClientBuilder;
 
     @Override
     public ResponseEntity<String> registerNewVehicle(VehicleRegistration vehicleRegistration) {
@@ -119,7 +119,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     private DriverInfo retrieveDriver(String driverLicenseNumber){
-    DriverInfo driverInfo = webClient.get().uri("http://localhost:9090/api/drivers/"+ driverLicenseNumber)
+    DriverInfo driverInfo = webClientBuilder.build().get().uri("http://driver-management-service/api/drivers/"+ driverLicenseNumber)
           .retrieve()
           .bodyToMono(DriverInfo.class)
           .block();

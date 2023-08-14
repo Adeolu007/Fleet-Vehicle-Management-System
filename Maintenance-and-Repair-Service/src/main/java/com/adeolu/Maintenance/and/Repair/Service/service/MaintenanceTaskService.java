@@ -2,6 +2,7 @@ package com.adeolu.Maintenance.and.Repair.Service.service;
 
 
 import com.adeolu.Maintenance.and.Repair.Service.dto.MaintenanceTaskDto;
+import com.adeolu.Maintenance.and.Repair.Service.dto.RegisteredVehicleDto;
 import com.adeolu.Maintenance.and.Repair.Service.entity.MaintenanceTask;
 import com.adeolu.Maintenance.and.Repair.Service.exception.NoMaintenanceTasksFoundException;
 import com.adeolu.Maintenance.and.Repair.Service.exception.VehicleNotFoundException;
@@ -9,6 +10,7 @@ import com.adeolu.Maintenance.and.Repair.Service.repository.MaintenanceTaskRepos
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +19,8 @@ import java.util.stream.Collectors;
 public class MaintenanceTaskService {
     @Autowired
     private MaintenanceTaskRepository maintenanceTaskRepository;
+    @Autowired
+    private WebClient.Builder webClientBuilder;
 //
 //    @Autowired
 //    private VehicleRepository vehicleRepository;
@@ -25,6 +29,13 @@ public class MaintenanceTaskService {
         //connect to vehicle Micro-Service to get the vehicle
 //        Vehicle vehicle = vehicleRepository.findByLicensePlate(maintenanceTaskDto.getLicensePlate())
 //                .orElseThrow(() -> new VehicleNotFoundException("Vehicle not found"));
+
+        Boolean isVehiclePresent = vehicleExist(maintenanceTaskDto.getVehicle());
+        if(!isVehiclePresent){
+            throw new VehicleNotFoundException("This vehicle does not exist");
+        }
+
+        RegisteredVehicleDto vehicleDetails = retrieveVehicle(maintenanceTaskDto.getVehicle());
 
         MaintenanceTask maintenanceTask = new MaintenanceTask();
         maintenanceTask.setVehicle(maintenanceTaskDto.getVehicle());
@@ -47,7 +58,7 @@ public class MaintenanceTaskService {
         return ResponseEntity.ok(allMaintenanceTaskDto);
     }
     private MaintenanceTaskDto convertToMaintenanceTaskDto(MaintenanceTask maintenanceTask) {
-        return MaintenanceTaskDto.builder().vehicle(maintenanceTask.getVehicle()).description(maintenanceTask.getVehicle())
+        return MaintenanceTaskDto.builder().vehicle(maintenanceTask.getVehicle()).description(maintenanceTask.getDescription())
                 .scheduledDate(maintenanceTask.getScheduledDate()).build();
     }
 
@@ -82,5 +93,30 @@ public class MaintenanceTaskService {
         }
         maintenanceTaskRepository.deleteByVehicle(vehicle);
         return ResponseEntity.ok(vehicle + " has been deleted");
+    }
+
+    //////
+    private Boolean vehicleExist(String licensePlate){
+        Boolean doesVehicleExist = webClientBuilder.build().get().uri("http://vehicle-management-service/api/vehicles/exist/"+ licensePlate)
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
+        return doesVehicleExist;
+    }
+
+    private Boolean driverExist(String licenseNumber){
+        Boolean doesDriverExist = webClientBuilder.build().get().uri("http://driver-management-service/api/drivers/exist/"+ licenseNumber)
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
+        return doesDriverExist;
+    }
+
+    private RegisteredVehicleDto retrieveVehicle(String licensePlate){
+        RegisteredVehicleDto vehicleInfo = webClientBuilder.build().get().uri("http://vehicle-management-service/api/vehicles/"+ licensePlate)
+                .retrieve()
+                .bodyToMono(RegisteredVehicleDto.class)
+                .block();
+        return vehicleInfo;
     }
 }

@@ -27,13 +27,15 @@ public class FuelServiceImpl implements FuelService {
     @Autowired
     private OdometerReadingRepository odometerReadingRepository;
     @Autowired
-    private WebClient webClient;
+    private WebClient.Builder webClientBuilder;
 
 
     @Override
     public ResponseEntity<FuelRecordResponse> addFuelRecord(FuelRecordDto fuelRecordDto) {
         // Check if the vehicle (license plate) exists using vehicle management service
         // Check if the driver exists using driver management service
+
+
         Boolean isVehiclePresent = vehicleExist(fuelRecordDto.getLicensePlate());
         if(!isVehiclePresent){
             throw new VehicleNotFoundException("This vehicle does not exist");
@@ -59,7 +61,7 @@ public class FuelServiceImpl implements FuelService {
         FuelRecordResponse savedFuelRecord = FuelRecordResponse.builder()
                 .refuelingDate(fuelRecord.getRefuelingDate())
                 .costPerLiter(fuelRecord.getCostPerLiter())
-                .driverName(fuelRecord.getDriverName())
+                .driverName(vehicleDetails.getFirstName())
                 .licensePlate(fuelRecord.getLicensePlate())
                 .litersFilled(fuelRecord.getLitersFilled())
                 .totalCost(totalCost)
@@ -157,7 +159,7 @@ public class FuelServiceImpl implements FuelService {
 
 
     private Boolean vehicleExist(String licensePlate){
-        Boolean doesVehicleExist = webClient.get().uri("http://localhost:8093/api/vehicles/exist/"+ licensePlate)
+        Boolean doesVehicleExist = webClientBuilder.build().get().uri("http://vehicle-management-service/api/vehicles/exist/"+ licensePlate)
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block();
@@ -165,7 +167,7 @@ public class FuelServiceImpl implements FuelService {
     }
 
     private Boolean driverExist(String licenseNumber){
-        Boolean doesDriverExist = webClient.get().uri("http://localhost:9090/api/drivers/exist/"+ licenseNumber)
+        Boolean doesDriverExist = webClientBuilder.build().get().uri("http://driver-management-service/api/drivers/exist/"+ licenseNumber)
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block();
@@ -173,7 +175,7 @@ public class FuelServiceImpl implements FuelService {
     }
 
     private RegisteredVehicleDto retrieveVehicle(String licensePlate){
-        RegisteredVehicleDto vehicleInfo = webClient.get().uri("http://localhost:8093/api/vehicles"+ licensePlate)
+        RegisteredVehicleDto vehicleInfo = webClientBuilder.build().get().uri("http://vehicle-management-service/api/vehicles/"+ licensePlate)
                 .retrieve()
                 .bodyToMono(RegisteredVehicleDto.class)
                 .block();

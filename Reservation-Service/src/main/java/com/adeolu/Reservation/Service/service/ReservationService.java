@@ -19,6 +19,7 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    //not tested this
     public ResponseEntity<ReservationDto> createReservation(ReservationDto reservationDto) {
         // Validate if the vehicle is available during the specified time
 //        Vehicle vehicle = vehicleRepository.findById(reservationDto.getVehicleId())

@@ -4,10 +4,12 @@ package com.adeolu.Maintenance.and.Repair.Service.service;
 import com.adeolu.Maintenance.and.Repair.Service.dto.RepairRecordDto;
 import com.adeolu.Maintenance.and.Repair.Service.entity.RepairRecord;
 import com.adeolu.Maintenance.and.Repair.Service.exception.RepairRecordNotFoundException;
+import com.adeolu.Maintenance.and.Repair.Service.exception.VehicleNotFoundException;
 import com.adeolu.Maintenance.and.Repair.Service.repository.RepairRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,14 +19,18 @@ public class RepairRecordService {
 
     @Autowired
     private RepairRecordRepository repairRecordRepository;
+    @Autowired
+    private WebClient.Builder webClientBuilder;
 
 //    @Autowired
 //    private VehicleRepository vehicleRepository;
 
     public ResponseEntity<RepairRecordDto> createRepairRecord(RepairRecordDto repairRecordDto) {
         // Connect to vehicle Micro-Service to get the vehicle
-//        Vehicle vehicle = vehicleRepository.findByLicensePlate(repairRecordDto.getLicensePlate())
-//                .orElseThrow(() -> new VehicleNotFoundException("Vehicle not found"));
+        Boolean isVehiclePresent = vehicleExist(repairRecordDto.getVehicle());
+        if(!isVehiclePresent){
+            throw new VehicleNotFoundException("This vehicle does not exist");
+        }
 
         RepairRecord repairRecord = new RepairRecord();
         repairRecord.setVehicle(repairRecordDto.getVehicle());
@@ -79,5 +85,13 @@ public class RepairRecordService {
         }
         repairRecordRepository.deleteByVehicle(licensePlate);
         return ResponseEntity.ok(licensePlate + " has been deleted");
+    }
+
+    private Boolean vehicleExist(String licensePlate){
+        Boolean doesVehicleExist = webClientBuilder.build().get().uri("http://vehicle-management-service/api/vehicles/exist/"+ licensePlate)
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
+        return doesVehicleExist;
     }
 }
