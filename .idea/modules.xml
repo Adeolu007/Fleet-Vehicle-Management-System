@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/Fleet Vehicle Management System Gradle.iml" filepath="$PROJECT_DIR$/.idea/Fleet Vehicle Management System Gradle.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Fuel-Management-Service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Fuel-Management-Service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Maintenance-and-Repair-Service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Maintenance-and-Repair-Service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Notification-Management-Service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Notification-Management-Service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Reservation-Service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Reservation-Service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Vehicle-Management-Service-Gradle.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Vehicle-Management-Service-Gradle.main.iml" />
     </modules>

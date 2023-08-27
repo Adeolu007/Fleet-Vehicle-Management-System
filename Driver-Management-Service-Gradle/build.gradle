@@ -32,6 +32,8 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '3.1.2'
 	//implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '4.0.3'
+	implementation 'javax.validation:validation-api:2.0.1.Final' // Java Bean Validation API
+	implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final' // Hibernate Validator
 
 
 }

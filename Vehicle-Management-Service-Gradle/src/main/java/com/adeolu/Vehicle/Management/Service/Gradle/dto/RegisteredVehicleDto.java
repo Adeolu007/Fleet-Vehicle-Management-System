@@ -21,4 +21,5 @@ public class RegisteredVehicleDto {
     private String fuelCapacity;
     private String firstName;
     private String driverLicenseNumber;
+    private String email;
 }

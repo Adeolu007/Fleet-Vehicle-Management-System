@@ -26,9 +26,10 @@ public class FuelServiceImpl implements FuelService {
     private FuelRecordRepository fuelRecordRepository;
     @Autowired
     private OdometerReadingRepository odometerReadingRepository;
-    @Autowired
-    private WebClient.Builder webClientBuilder;
-
+//    @Autowired
+//    private WebClient.Builder webClientBuilder;
+@Autowired
+private WebClient webClient;
 
     @Override
     public ResponseEntity<FuelRecordResponse> addFuelRecord(FuelRecordDto fuelRecordDto) {
@@ -159,26 +160,35 @@ public class FuelServiceImpl implements FuelService {
 
 
     private Boolean vehicleExist(String licensePlate){
-        Boolean doesVehicleExist = webClientBuilder.build().get().uri("http://vehicle-management-service/api/vehicles/exist/"+ licensePlate)
+        Boolean doesVehicleExist = webClient.get().uri("http://localhost:4545/api/vehicles/exist/"+ licensePlate)
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block();
         return doesVehicleExist;
     }
-
+//"http://vehicle-management-service/api/vehicles/exist/"
     private Boolean driverExist(String licenseNumber){
-        Boolean doesDriverExist = webClientBuilder.build().get().uri("http://driver-management-service/api/drivers/exist/"+ licenseNumber)
+        Boolean doesDriverExist = webClient.get().uri("http://localhost:9475/api/drivers/exist/"+ licenseNumber)
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block();
         return doesDriverExist;
     }
 
-    private RegisteredVehicleDto retrieveVehicle(String licensePlate){
-        RegisteredVehicleDto vehicleInfo = webClientBuilder.build().get().uri("http://vehicle-management-service/api/vehicles/"+ licensePlate)
-                .retrieve()
-                .bodyToMono(RegisteredVehicleDto.class)
-                .block();
-        return vehicleInfo;
-    }
+    //http://driver-management-service/api/drivers/exist/
+
+//    private RegisteredVehicleDto retrieveVehicle(String licensePlate){
+//        RegisteredVehicleDto vehicleInfo = webClientBuilder.build().get().uri("http://localhost:4545/api/vehicles/"+ licensePlate)
+//                .retrieve()
+//                .bodyToMono(RegisteredVehicleDto.class)
+//                .block();
+//        return vehicleInfo;
+//    }
+private RegisteredVehicleDto retrieveVehicle(String licensePlate) {
+    RegisteredVehicleDto vehicleInfo = webClient.get().uri("http://localhost:4545/api/vehicles/"+ licensePlate)
+            .retrieve()
+            .bodyToMono(RegisteredVehicleDto.class)
+            .block();
+    return vehicleInfo;
+}
 }

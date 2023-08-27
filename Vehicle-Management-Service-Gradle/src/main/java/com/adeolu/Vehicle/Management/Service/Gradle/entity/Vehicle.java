@@ -28,4 +28,5 @@ public class Vehicle {
     private String fuelCapacity;
     private String firstName;
     private String driverLicenseNumber;
+    private String email;
 }

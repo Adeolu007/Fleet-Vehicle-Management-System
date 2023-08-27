@@ -1,17 +1,34 @@
 package com.adeolu.Vehicle.Management.Service.Gradle.contoller;
 
+import com.adeolu.Vehicle.Management.Service.Gradle.configCommunication.RabbitMQProducer;
+import com.adeolu.Vehicle.Management.Service.Gradle.dto.DriverInfo;
 import com.adeolu.Vehicle.Management.Service.Gradle.dto.RegisteredVehicleDto;
 import com.adeolu.Vehicle.Management.Service.Gradle.dto.VehicleRegistration;
 import com.adeolu.Vehicle.Management.Service.Gradle.service.VehicleService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/vehicles")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class VehicleController {
     private final VehicleService vehicleService;
+    //private final RabbitMQProducer producer;
+
+    public VehicleController(VehicleService vehicleService) {
+        this.vehicleService = vehicleService;
+       // this.producer = producer;
+    }
+
+//@GetMapping("/publish")
+//    public ResponseEntity<String> sendMessage(@RequestParam("message") String message){
+//        producer.sendMessage(message);
+//        return ResponseEntity.ok("Message sent to rabbitMq");
+//    }
+
+
+
+
 
     @PostMapping("/register")
     public ResponseEntity<String> registerVehicle(@RequestBody VehicleRegistration vehicleRegistration) {

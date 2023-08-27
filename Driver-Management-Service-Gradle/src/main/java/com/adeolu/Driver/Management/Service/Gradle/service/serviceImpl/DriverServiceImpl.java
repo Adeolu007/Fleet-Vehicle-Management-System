@@ -55,6 +55,7 @@ public class DriverServiceImpl implements DriverService {
                 .firstName(driverProfile.getFirstName())
                 .lastName(driverProfile.getLastName())
                 .licenseNumber(driverProfile.getLicenseNumber())
+                .email(driverProfile.getEmail())
                 .build();
 
         return new ResponseEntity<>(driver, HttpStatus.FOUND);
@@ -67,6 +68,7 @@ public class DriverServiceImpl implements DriverService {
                         .firstName(driver.getFirstName())
                         .lastName(driver.getLastName())
                         .licenseNumber(driver.getLicenseNumber())
+                        .email(driver.getEmail())
                         .build())
                 .collect(Collectors.toList());
 

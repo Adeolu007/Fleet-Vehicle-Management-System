@@ -13,4 +13,5 @@ public class DriverInfo {
     private String firstName;
     private String lastName;
     private String licenseNumber;
+    private String email;
 }

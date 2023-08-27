@@ -4,7 +4,9 @@ package com.adeolu.Reservation.Service.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -17,15 +19,11 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //
-//    @ManyToOne
-//    @JoinColumn(name = "vehicle_id")
     private String vehicle;
-    //
-//    @ManyToOne
-//    @JoinColumn(name = "driver_id")
     private String driver;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private String purpose;
 
 }

@@ -19,6 +19,7 @@ public class VehicleRegistration {
     private Date acquisitionDate;
     private String description;
     private String fuelCapacity;
+    private String email;
 //    private String firstName;
     private String driverLicenseNumber;
 }

@@ -2,7 +2,9 @@ package com.adeolu.Reservation.Service.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -10,8 +12,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class ReservationDto {
-    private Long vehicleId;
-    private Long driverId;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private String vehicle;
+    private String driver;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private String purpose;
 }
